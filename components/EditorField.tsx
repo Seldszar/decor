@@ -166,12 +166,12 @@ function EditorField(props: EditorFieldProps) {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item noStyle name={fullPath.concat(2)}>
+              <Form.Item noStyle name={fullPath.concat(3)}>
                 <InputNumber addonAfter="px" style={{ width: "100%" }} />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item noStyle name={fullPath.concat(3)}>
+              <Form.Item noStyle name={fullPath.concat(2)}>
                 <InputNumber addonAfter="px" style={{ width: "100%" }} />
               </Form.Item>
             </Col>
