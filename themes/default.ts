@@ -134,8 +134,6 @@ export const formFields = [
 export function styleGenerator(values) {
   const { avatar, frame, layout, name, speaking } = values;
 
-  console.log(name);
-
   return `
     [class*="Voice_voiceStates__"] {
       align-content: ${layout.position.y};
