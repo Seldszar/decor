@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 
 interface PreviewItemProps {
-  index: number;
+  speaking?: boolean;
+  name: string;
 }
 
 function PreviewItem(props: PreviewItemProps) {
-  const [speaking, setSpeaking] = useState(false);
+  const [speaking, setSpeaking] = useState(props.speaking);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | undefined;
@@ -18,7 +19,9 @@ function PreviewItem(props: PreviewItemProps) {
       timeoutId = setTimeout(tick, 500 + Math.random() * 4_500);
     };
 
-    tick(false);
+    if (props.speaking == null) {
+      tick(false);
+    }
 
     return () => {
       if (timeoutId == null) {
@@ -34,7 +37,7 @@ function PreviewItem(props: PreviewItemProps) {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className={`Voice_avatar__htiqH ${speaking ? "Voice_avatarSpeaking__lE+4m" : ""}`}
-        src={`https://api.dicebear.com/6.x/fun-emoji/svg?seed=${props.index}`}
+        src={`https://api.dicebear.com/6.x/fun-emoji/svg?seed=${props.name}`}
         alt=""
       />
       <div className="Voice_user__8fGwX">
@@ -46,7 +49,7 @@ function PreviewItem(props: PreviewItemProps) {
             fontSize: "14px",
           }}
         >
-          User {props.index + 1}
+          {props.name}
         </span>
       </div>
     </li>
