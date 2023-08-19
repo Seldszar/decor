@@ -170,6 +170,7 @@ export function styleGenerator(values) {
       border-radius: ${avatar.radius}px;
       filter: grayscale(1) opacity(0.75);
       flex: 1;
+      min-height: 0;
       object-fit: cover;
       outline: 100vmax solid transparent;
       transition: 0.2s filter, outline-color;
