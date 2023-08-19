@@ -16,7 +16,7 @@ export const formFields = [
       },
       {
         name: "padding",
-        type: "spacing",
+        type: "padding",
         title: "Padding",
       },
       {
@@ -43,12 +43,12 @@ export const formFields = [
       },
       {
         name: "radius",
-        type: "spacing",
-        title: "Corners",
+        type: "radius",
+        title: "Border Radius",
       },
       {
         name: "padding",
-        type: "spacing",
+        type: "padding",
         title: "Padding",
       },
       {
@@ -70,8 +70,8 @@ export const formFields = [
     children: [
       {
         name: "radius",
-        type: "spacing",
-        title: "Corners",
+        type: "radius",
+        title: "Border Radius",
       },
     ],
   },
@@ -97,8 +97,26 @@ export const formFields = [
       },
       {
         name: "fontWeight",
-        type: "font-weight",
+        type: "select",
         title: "Font Weight",
+        options: [
+          {
+            value: 400,
+            label: "Normal",
+          },
+          {
+            value: 500,
+            label: "Medium",
+          },
+          {
+            value: 600,
+            label: "Semibold",
+          },
+          {
+            value: 700,
+            label: "Bold",
+          },
+        ],
       },
       {
         name: "color",
@@ -106,8 +124,31 @@ export const formFields = [
         title: "Text Color",
       },
       {
+        name: "textTransform",
+        type: "select",
+        title: "Text Transform",
+        options: [
+          {
+            label: "Default",
+            value: "none",
+          },
+          {
+            label: "Capitalize",
+            value: "capitalize",
+          },
+          {
+            label: "Lowercase",
+            value: "lowercase",
+          },
+          {
+            label: "Uppercase",
+            value: "uppercase",
+          },
+        ],
+      },
+      {
         name: "padding",
-        type: "spacing",
+        type: "padding",
         title: "Padding",
       },
     ],
@@ -131,41 +172,43 @@ export const formFields = [
   },
 ];
 
+const joinValues = (values: number[]) =>
+  values.map((value) => (value ? `${value}px` : 0)).join(" ");
+
 export function styleGenerator(values) {
   const { avatar, frame, layout, name, speaking } = values;
 
   return `
     [class*="Voice_voiceStates__"] {
-      align-content: ${layout.position.y};
+      align-content: ${layout.position[1]};
       box-sizing: border-box;
       display: flex;
       flex-direction: ${layout.direction};
       flex-wrap: wrap;
-      gap: ${layout.gap}px;
-      justify-content: ${layout.position.x};
+      gap: ${joinValues(layout.gap.reverse())};
+      justify-content: ${layout.position[0]};
       height: 100vh;
       margin: 0;
-      padding: ${layout.padding}px;
+      padding: ${joinValues(layout.padding)};
     }
 
     [class*="Voice_voiceState__"] {
       background: ${frame.background};
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-      border-radius: ${frame.radius}px;
+      border-radius: ${joinValues(frame.radius)};
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      gap: ${frame.gap}px;
+      gap: ${joinValues(frame.gap.reverse())};
       height: ${frame.height}px;
       margin-bottom: 0;
       overflow: hidden;
-      padding: ${frame.padding}px;
+      padding: ${joinValues(frame.padding)};
       width: ${frame.width}px;
     }
 
     [class*="Voice_avatar__"] {
       border: none;
-      border-radius: ${avatar.radius}px;
+      border-radius: ${joinValues(avatar.radius)};
       filter: grayscale(1) opacity(0.75);
       flex: 1;
       min-height: 0;
@@ -185,10 +228,11 @@ export function styleGenerator(values) {
       margin: 0;
       padding: 0;
       overflow: hidden;
-      padding: ${name.padding}px;
+      padding: ${joinValues(name.padding)};
       position: relative;
       text-align: center;
       text-overflow: ellipsis;
+      text-transform: ${name.textTransform};
       transition: 0.2s color;
     }
 
@@ -197,7 +241,7 @@ export function styleGenerator(values) {
     }
 
     [class*="Voice_avatarSpeaking__"] {
-      filter: grayscale(0);
+      filter: none;
       outline-color: ${speaking.background};
     }
 
@@ -209,26 +253,23 @@ export function styleGenerator(values) {
 
 export const defaultValues = {
   layout: {
-    position: {
-      x: "center",
-      y: "center",
-    },
+    position: ["center", "center"],
     direction: "row",
-    padding: 16,
-    gap: 8,
+    padding: [16, 16, 16, 16],
+    gap: [8, 8],
   },
 
   frame: {
     width: 120,
     height: 146,
-    radius: 4,
-    padding: 4,
-    gap: 4,
+    radius: [4, 4, 4, 4],
+    padding: [4, 4, 4, 4],
+    gap: [4, 4],
     background: "#000000",
   },
 
   avatar: {
-    radius: 3,
+    radius: [3, 3, 3, 3],
   },
 
   name: {
@@ -237,7 +278,8 @@ export const defaultValues = {
     fontSize: 16,
     color: "#ffffff",
     fontWeight: 600,
-    padding: 4,
+    textTransform: "none",
+    padding: [4, 4, 4, 4],
   },
 
   speaking: {

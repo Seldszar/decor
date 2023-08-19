@@ -2,7 +2,7 @@ import { Checkbox, Col, ColorPicker, Form, Input, InputNumber, Row, Select } fro
 import { useMemo } from "react";
 
 export interface EditorFieldProps {
-  path: string[];
+  path: Array<string | number>;
   field: any;
 }
 
@@ -27,7 +27,7 @@ function EditorField(props: EditorFieldProps) {
     case "color":
       return (
         <Form.Item label={field.title} name={fullPath}>
-          <ColorPicker showText />
+          <ColorPicker showText style={{ width: "100%" }} />
         </Form.Item>
       );
 
@@ -57,43 +57,49 @@ function EditorField(props: EditorFieldProps) {
         </Form.Item>
       );
 
-    case "font-weight":
-      return (
-        <Form.Item label={field.title} name={fullPath}>
-          <Select
-            options={[
-              {
-                value: 400,
-                label: "Normal",
-              },
-              {
-                value: 500,
-                label: "Medium",
-              },
-              {
-                value: 600,
-                label: "Semibold",
-              },
-              {
-                value: 700,
-                label: "Bold",
-              },
-            ]}
-          />
-        </Form.Item>
-      );
-
     case "gap":
       return (
-        <Form.Item label={field.title} name={fullPath}>
-          <InputNumber addonAfter="px" />
+        <Form.Item label={field.title}>
+          <Row gutter={[8, 8]}>
+            <Col span={12}>
+              <Form.Item noStyle name={fullPath.concat(0)}>
+                <InputNumber addonAfter="px" style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item noStyle name={fullPath.concat(1)}>
+                <InputNumber addonAfter="px" style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+          </Row>
         </Form.Item>
       );
 
     case "padding":
       return (
-        <Form.Item label={field.title} name={fullPath}>
-          <InputNumber addonAfter="px" />
+        <Form.Item label={field.title}>
+          <Row gutter={[8, 8]}>
+            <Col offset={6} span={12}>
+              <Form.Item noStyle name={fullPath.concat(0)}>
+                <InputNumber addonAfter="px" style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item noStyle name={fullPath.concat(1)}>
+                <InputNumber addonAfter="px" style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item noStyle name={fullPath.concat(2)}>
+                <InputNumber addonAfter="px" style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+            <Col offset={6} span={12}>
+              <Form.Item noStyle name={fullPath.concat(3)}>
+                <InputNumber addonAfter="px" style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+          </Row>
         </Form.Item>
       );
 
@@ -102,7 +108,7 @@ function EditorField(props: EditorFieldProps) {
         <Form.Item label={field.title}>
           <Row gutter={8}>
             <Col span={12}>
-              <Form.Item noStyle name={fullPath.concat("x")}>
+              <Form.Item noStyle name={fullPath.concat(0)}>
                 <Select
                   options={[
                     {
@@ -122,7 +128,7 @@ function EditorField(props: EditorFieldProps) {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item noStyle name={fullPath.concat("y")}>
+              <Form.Item noStyle name={fullPath.concat(1)}>
                 <Select
                   options={[
                     {
@@ -145,17 +151,52 @@ function EditorField(props: EditorFieldProps) {
         </Form.Item>
       );
 
+    case "radius":
+      return (
+        <Form.Item label={field.title}>
+          <Row gutter={[8, 8]}>
+            <Col span={12}>
+              <Form.Item noStyle name={fullPath.concat(0)}>
+                <InputNumber addonAfter="px" style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item noStyle name={fullPath.concat(1)}>
+                <InputNumber addonAfter="px" style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item noStyle name={fullPath.concat(2)}>
+                <InputNumber addonAfter="px" style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item noStyle name={fullPath.concat(3)}>
+                <InputNumber addonAfter="px" style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form.Item>
+      );
+
+    case "select":
+      return (
+        <Form.Item label={field.title} name={fullPath}>
+          <Select options={field.options} />
+        </Form.Item>
+      );
+
     case "size":
       return (
         <Form.Item label={field.title} name={fullPath}>
-          <InputNumber addonAfter="px" />
+          <InputNumber addonAfter="px" style={{ width: "100%" }} />
         </Form.Item>
       );
 
     case "spacing":
       return (
         <Form.Item label={field.title} name={fullPath}>
-          <InputNumber addonAfter="px" />
+          <InputNumber addonAfter="px" style={{ width: "100%" }} />
         </Form.Item>
       );
 

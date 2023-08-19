@@ -1,5 +1,5 @@
 import { Button, Collapse, Form } from "antd";
-import { get, mergeWith } from "lodash-es";
+import { get, invoke, mergeWith } from "lodash-es";
 
 import EditorField from "./EditorField";
 
@@ -18,13 +18,9 @@ function Editor<T>(props: EditorProps<T>) {
       initialValues={props.values}
       className="flex flex-col flex-none shadow-xl relative w-[340px] z-10"
       onValuesChange={(changedValues) => {
-        const values = mergeWith({}, props.values, changedValues, (value) => {
-          if (value && typeof value === "object" && "toRgbString" in value) {
-            return value.toRgbString();
-          }
-
-          return undefined;
-        });
+        const values = mergeWith({}, props.values, changedValues, (_, value) =>
+          invoke(value, "toRgbString"),
+        );
 
         props.onChange(values);
       }}
