@@ -29,6 +29,17 @@ function Page() {
         onExportClick={() => setOpen(true)}
       />
 
+      <div className="bottom-0 fixed left-0 p-4 [&_a]:text-inherit text-xs">
+        Made with love by{" "}
+        <a href="https://seldszar.fr" target="_blank" rel="noopener noreferrer">
+          Seldszar
+        </a>{" "}
+        &ndash;{" "}
+        <a href="https://github.com/Seldszar/decor" target="_blank" rel="noopener noreferrer">
+          View Source
+        </a>
+      </div>
+
       <Modal open={open} title="Generated Styles" footer={null} onCancel={() => setOpen(false)}>
         <Typography.Paragraph>
           Copy the code below in the &laquo;Custom CSS&raquo; section of the browser source
