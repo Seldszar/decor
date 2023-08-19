@@ -185,7 +185,7 @@ export function styleGenerator(values) {
       display: flex;
       flex-direction: ${layout.direction};
       flex-wrap: wrap;
-      gap: ${joinValues(layout.gap.reverse())};
+      gap: ${joinValues(layout.gap)};
       justify-content: ${layout.position[0]};
       height: 100vh;
       margin: 0;
@@ -198,7 +198,7 @@ export function styleGenerator(values) {
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      gap: ${joinValues(frame.gap.reverse())};
+      gap: ${joinValues(frame.gap)};
       height: ${frame.height}px;
       margin-bottom: 0;
       overflow: hidden;
