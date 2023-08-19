@@ -8,7 +8,7 @@ interface PreviewProps {
 
 function Preview(props: PreviewProps) {
   return (
-    <Frame className={props.className}>
+    <Frame className={`border-none ${props.className}`}>
       <div className="Voice_voiceContainer__adk9M">
         <ul className="Voice_voiceStates__a121W">
           {Array.from({ length: 5 }, (_, index) => (
