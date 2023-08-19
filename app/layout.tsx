@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { ReactNode } from "react";
 
 import "~/assets/styles/base.css";
@@ -13,5 +14,10 @@ function Layout(props: LayoutProps) {
     </html>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Decor - Theme Builder",
+  description: "Yet another Discord Streamkit Overlay customizable theme builder",
+};
 
 export default Layout;

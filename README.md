@@ -1,6 +1,6 @@
 # Decor
 
-> Yet another Discord Streamkit Overlay customizable theme
+> Yet another Discord Streamkit Overlay customizable theme builder
 
 ## License
 
