@@ -172,46 +172,47 @@ export const formFields = [
   },
 ];
 
-const joinValues = (values: number[]) =>
-  values.map((value) => (value ? `${value}px` : 0)).join(" ");
+const joinValues = (values: number[], suffix = "") =>
+  values.map((value) => (value ? `${value}${suffix}` : 0)).join(" ");
 
 export function styleGenerator(values) {
   const { avatar, frame, layout, name, speaking } = values;
 
   return `
     [class*="Voice_voiceStates__"] {
-      align-content: ${layout.position[1]};
       box-sizing: border-box;
       display: flex;
       flex-direction: ${layout.direction};
       flex-wrap: wrap;
-      gap: ${joinValues(layout.gap)};
-      justify-content: ${layout.position[0]};
+      gap: ${joinValues(layout.gap, "px")};
       height: 100vh;
       margin: 0;
-      padding: ${joinValues(layout.padding)};
+      padding: ${joinValues(layout.padding, "px")};
+      place-content: ${joinValues(layout.position)};
     }
 
     [class*="Voice_voiceState__"] {
       background: ${frame.background};
-      border-radius: ${joinValues(frame.radius)};
+      border-radius: ${joinValues(frame.radius, "px")};
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      gap: ${joinValues(frame.gap)};
+      gap: ${joinValues(frame.gap, "px")};
       height: ${frame.height}px;
       margin-bottom: 0;
       overflow: hidden;
-      padding: ${joinValues(frame.padding)};
+      padding: ${joinValues(frame.padding, "px")};
       width: ${frame.width}px;
     }
 
     [class*="Voice_avatar__"] {
       border: none;
-      border-radius: ${joinValues(avatar.radius)};
+      border-radius: ${joinValues(avatar.radius, "px")};
       filter: grayscale(1) opacity(0.75);
       flex: 1;
+      height: 100%;
       min-height: 0;
+      min-width: 0;
       object-fit: cover;
       outline: 100vmax solid transparent;
       transition: 0.2s filter, outline-color;
@@ -228,7 +229,7 @@ export function styleGenerator(values) {
       margin: 0;
       padding: 0;
       overflow: hidden;
-      padding: ${joinValues(name.padding)};
+      padding: ${joinValues(name.padding, "px")};
       position: relative;
       text-align: center;
       text-overflow: ellipsis;

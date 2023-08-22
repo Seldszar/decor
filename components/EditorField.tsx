@@ -108,7 +108,7 @@ function EditorField(props: EditorFieldProps) {
         <Form.Item label={field.title}>
           <Row gutter={8}>
             <Col span={12}>
-              <Form.Item noStyle name={fullPath.concat(0)}>
+              <Form.Item noStyle name={fullPath.concat(1)}>
                 <Select
                   options={[
                     {
@@ -128,7 +128,7 @@ function EditorField(props: EditorFieldProps) {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item noStyle name={fullPath.concat(1)}>
+              <Form.Item noStyle name={fullPath.concat(0)}>
                 <Select
                   options={[
                     {
