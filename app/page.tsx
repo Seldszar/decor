@@ -1,6 +1,7 @@
 "use client";
 
-import { Input, Modal, Typography } from "antd";
+import { Input, Modal, Typography, message } from "antd";
+import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import stripIndent from "strip-indent";
 
@@ -10,8 +11,20 @@ import Editor from "~/components/Editor";
 import Preview from "~/components/Preview";
 
 function Page() {
+  const searchParams = useSearchParams();
+
+  const [{ success }, contextHolder] = message.useMessage();
+
   const [open, setOpen] = useState(false);
-  const [values, setValues] = useState(defaultValues);
+  const [values, setValues] = useState(() => {
+    const data = searchParams.get("");
+
+    if (data) {
+      return JSON.parse(atob(data as string));
+    }
+
+    return defaultValues;
+  });
 
   const styles = useMemo(() => styleGenerator(values), [values]);
 
@@ -27,6 +40,13 @@ function Page() {
         fields={formFields}
         onChange={setValues}
         onExportClick={() => setOpen(true)}
+        onCopyClick={() => {
+          navigator.clipboard.writeText(
+            new URL(`/?=${btoa(JSON.stringify(values))}`, location.href).href,
+          );
+
+          success("URL copied to clipboard");
+        }}
       />
 
       <div className="bottom-0 fixed left-0 p-4 [&_a]:text-inherit text-xs">
@@ -51,6 +71,8 @@ function Page() {
           onClick={(event) => event.currentTarget.select()}
         />
       </Modal>
+
+      {contextHolder}
     </div>
   );
 }

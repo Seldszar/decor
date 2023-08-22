@@ -1,4 +1,4 @@
-import { Button, Collapse, Form } from "antd";
+import { Button, Collapse, Form, Space } from "antd";
 import { get, invoke, mergeWith } from "lodash-es";
 
 import EditorField from "./EditorField";
@@ -8,7 +8,9 @@ export interface EditorProps<T> {
   values: T;
 
   onChange(values: T): void;
+
   onExportClick(): void;
+  onCopyClick(): void;
 }
 
 function Editor<T>(props: EditorProps<T>) {
@@ -37,11 +39,14 @@ function Editor<T>(props: EditorProps<T>) {
         }))}
       />
 
-      <div className="flex-none p-4">
+      <Space direction="vertical" size={8} className="flex-none p-4">
         <Button block type="primary" size="large" onClick={props.onExportClick}>
-          Export Styles
+          Export
         </Button>
-      </div>
+        <Button block type="text" onClick={props.onCopyClick}>
+          Copy URL
+        </Button>
+      </Space>
     </Form>
   );
 }
