@@ -1,4 +1,4 @@
-import { Checkbox, Col, ColorPicker, Form, Input, InputNumber, Row, Select } from "antd";
+import { Checkbox, Col, ColorPicker, Form, Input, InputNumber, Row, Select, Slider } from "antd";
 import { useMemo } from "react";
 
 export interface EditorFieldProps {
@@ -72,6 +72,13 @@ function EditorField(props: EditorFieldProps) {
               </Form.Item>
             </Col>
           </Row>
+        </Form.Item>
+      );
+
+    case "slider":
+      return (
+        <Form.Item label={field.title} name={fullPath}>
+          <Slider min={field.range[0]} max={field.range[1]} style={{ width: "100%" }} />
         </Form.Item>
       );
 

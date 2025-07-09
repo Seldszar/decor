@@ -61,6 +61,12 @@ export const formFields = [
         type: "color",
         title: "Background",
       },
+      {
+        name: "opacity",
+        type: "slider",
+        title: "Opacity",
+        range: [0, 100],
+      },
     ],
   },
   {
@@ -124,6 +130,25 @@ export const formFields = [
         title: "Text Color",
       },
       {
+        name: "textAlign",
+        type: "select",
+        title: "Text Align",
+        options: [
+          {
+            value: "left",
+            label: "Left",
+          },
+          {
+            value: "center",
+            label: "Center",
+          },
+          {
+            value: "right",
+            label: "Right",
+          },
+        ],
+      },
+      {
         name: "textTransform",
         type: "select",
         title: "Text Transform",
@@ -175,11 +200,20 @@ export const formFields = [
 const joinValues = (values: number[], suffix = "") =>
   values.map((value) => (value ? `${value}${suffix}` : 0)).join(" ");
 
-export function styleGenerator(values) {
+const selectors = {
+  voiceStates: '[class*="Voice_voiceStates__"]',
+  voiceState: '[class*="Voice_voiceState__"]',
+  avatar: '[class*="Voice_avatar__"]',
+  avatarSpeaking: '[class*="Voice_avatarSpeaking__"]',
+  user: '[class*="Voice_user__"]',
+  name: '[class*="Voice_name__"]',
+};
+
+export function styleGenerator(values: any) {
   const { avatar, frame, layout, name, speaking } = values;
 
   return `
-    [class*="Voice_voiceStates__"] {
+    ${selectors.voiceStates} {
       box-sizing: border-box;
       display: flex;
       flex-direction: ${layout.direction};
@@ -191,21 +225,24 @@ export function styleGenerator(values) {
       place-content: ${joinValues(layout.position)};
     }
 
-    [class*="Voice_voiceState__"] {
+    ${selectors.voiceState} {
       background: ${frame.background};
       border-radius: ${joinValues(frame.radius, "px")};
+      color: ${name.color};
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
       gap: ${joinValues(frame.gap, "px")};
       height: ${frame.height}px;
       margin-bottom: 0;
+      opacity: ${frame.opacity / 100};
       overflow: hidden;
       padding: ${joinValues(frame.padding, "px")};
+      transition: 0.2s all;
       width: ${frame.width}px;
     }
 
-    [class*="Voice_avatar__"] {
+    ${selectors.avatar} {
       border: none;
       border-radius: ${joinValues(avatar.radius, "px")};
       filter: grayscale(1) opacity(0.75);
@@ -214,13 +251,11 @@ export function styleGenerator(values) {
       min-height: 0;
       min-width: 0;
       object-fit: cover;
-      outline: 100vmax solid transparent;
-      transition: 0.2s filter, outline-color;
+      transition: 0.2s all;
       width: 100%;
     }
 
-    [class*="Voice_user__"] {
-      color: ${name.color};
+    ${selectors.user} {
       display: ${name.visible ? "block" : "none"};
       font-family: ${name.fontFamily};
       font-weight: ${name.fontWeight};
@@ -233,21 +268,23 @@ export function styleGenerator(values) {
       position: relative;
       text-align: center;
       text-overflow: ellipsis;
+      text-align: ${name.textAlign};
       text-transform: ${name.textTransform};
-      transition: 0.2s color;
+      transition: 0.2s all;
     }
 
-    [class*="Voice_name__"] {
+    ${selectors.name} {
       all: unset !important;
     }
 
-    [class*="Voice_avatarSpeaking__"] {
-      filter: none;
-      outline-color: ${speaking.background};
+    ${selectors.voiceState}:has(${selectors.avatarSpeaking}) {
+      background: ${speaking.background};
+      color: ${speaking.color};
+      opacity: 1;
     }
 
-    [class*="Voice_avatarSpeaking__"] + [class*="Voice_user__"] {
-      color: ${speaking.color};
+    ${selectors.avatarSpeaking} {
+      filter: none;
     }
   `;
 }
@@ -267,6 +304,8 @@ export const defaultValues = {
     padding: [4, 4, 4, 4],
     gap: [4, 4],
     background: "#000000",
+    transformOrigin: [50, 50],
+    opacity: 100,
   },
 
   avatar: {
@@ -279,6 +318,7 @@ export const defaultValues = {
     fontSize: 16,
     color: "#ffffff",
     fontWeight: 600,
+    textAlign: "center",
     textTransform: "none",
     padding: [4, 4, 4, 4],
   },
