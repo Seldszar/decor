@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 interface PreviewItemProps {
-  speaking?: boolean;
+  speaking: boolean | null;
   name: string;
 }
 

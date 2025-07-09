@@ -20,7 +20,7 @@ function EditorField(props: EditorFieldProps) {
       );
 
     case "collapse":
-      return field.children.map((item) => (
+      return field.children.map((item: any) => (
         <EditorField key={item.name} field={item} path={fullPath} />
       ));
 

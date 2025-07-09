@@ -6,11 +6,11 @@ interface FrameProps extends HTMLAttributes<HTMLIFrameElement> {
 }
 
 function Frame(props: FrameProps) {
-  const [ref, setRef] = useState<HTMLIFrameElement>(null);
+  const [ref, setRef] = useState<HTMLIFrameElement | null>(null);
 
   return (
     <iframe {...props} ref={setRef}>
-      {ref && createPortal(props.children, ref.contentDocument.body)}
+      {ref?.contentDocument && createPortal(props.children, ref.contentDocument?.body)}
     </iframe>
   );
 }

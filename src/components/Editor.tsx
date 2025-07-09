@@ -1,5 +1,5 @@
 import { Button, Collapse, Form, Space } from "antd";
-import { get, invoke, mergeWith } from "lodash-es";
+import { get, invoke, mergeWith } from "es-toolkit/compat";
 
 import EditorField from "./EditorField";
 
@@ -17,7 +17,7 @@ function Editor<T>(props: EditorProps<T>) {
   return (
     <Form<T>
       layout="vertical"
-      initialValues={props.values}
+      initialValues={props.values as any}
       className="flex flex-col flex-none shadow-xl relative w-[340px] z-10"
       onValuesChange={(changedValues) => {
         const values = mergeWith({}, props.values, changedValues, (_, value) =>

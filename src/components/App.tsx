@@ -1,7 +1,4 @@
-"use client";
-
 import { Input, Modal, Typography, message } from "antd";
-import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import stripIndent from "strip-indent";
 
@@ -10,14 +7,12 @@ import { styleGenerator, defaultValues, formFields } from "~/themes/default";
 import Editor from "~/components/Editor";
 import Preview from "~/components/Preview";
 
-function Page() {
-  const searchParams = useSearchParams();
-
+function App() {
   const [{ success }, contextHolder] = message.useMessage();
 
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState(() => {
-    const data = searchParams.get("");
+    const data = new URLSearchParams(location.search).get("");
 
     if (data) {
       return JSON.parse(atob(data as string));
@@ -77,4 +72,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default App;
